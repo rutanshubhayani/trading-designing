@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              label: 'Account',
+              label: 'Account1',
             ),
           ],
         ),
