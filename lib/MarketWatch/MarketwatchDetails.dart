@@ -9,7 +9,7 @@ class MarketwatchDetails extends StatefulWidget {
   State<MarketwatchDetails> createState() => _MarketwatchDetailsState();
 }
 
-class _MarketwatchDetailsState extends State<MarketwatchDetails> {
+class _MarketwatchDetailsState extends State<MarketwatchDetails> with SingleTickerProviderStateMixin {
   TextEditingController OrderPriceController = TextEditingController();
   TextEditingController MarketLotsController = TextEditingController();
   TextEditingController OrderLotsController = TextEditingController();
@@ -17,106 +17,108 @@ class _MarketwatchDetailsState extends State<MarketwatchDetails> {
   FocusNode MarketLotsFocusnode = FocusNode();
   FocusNode OrderLotsFocusnode = FocusNode();
 
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(() {
+      setState(() {}); // Trigger rebuild when tab changes
+    });
+  }
+
   @override
   void dispose() {
-    super.dispose();
+    _tabController.dispose();
     OrderPriceFocusnode.dispose();
     MarketLotsFocusnode.dispose();
     OrderLotsFocusnode.dispose();
+    super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2, // Two tabs: Market and Order
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.black,
-          title: Text(widget.tradeName, style: TextStyle(color: Colors.white)),
-          actions: [
-            IconButton(
-              onPressed: () {
-                // Handle close action
-                Navigator.pop(context);
-              },
-              icon: Icon(Icons.close, color: Colors.white),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.black,
+        title: Text(widget.tradeName, style: TextStyle(color: Colors.white)),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.close, color: Colors.white),
+          ),
+        ],
+        bottom: TabBar(
+          controller: _tabController,
+          dividerColor: Colors.transparent,
+          indicator: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          labelColor: Colors.black,
+          unselectedLabelColor: Colors.white70,
+          tabs: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 50.0,), // Add horizontal padding
+              child: Tab(
+                text: "Market",
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 50.0), // Add horizontal padding
+              child: Tab(
+                text: "Order",
+              ),
             ),
           ],
-          bottom:TabBar(
-            indicator: BoxDecoration(
-              color: Colors.white, // Adjust to your desired color
-              borderRadius: BorderRadius.circular(20),
+        )
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                MarketTab(),
+                OrderTab(),
+              ],
             ),
-            labelColor: Colors.black,
-            unselectedLabelColor: Colors.white70,
-            dividerColor: Colors.transparent,
-            tabs: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 50.0,), // Add horizontal padding
-                child: Tab(
-                  text: "Market",
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 50.0), // Add horizontal padding
-                child: Tab(
-                  text: "Order",
-                ),
-              ),
-            ],
-          )
-
-        ),
-        body: Column(
-          children: [
-            Expanded(
-              child: TabBarView(
+          ),
+          Divider(thickness: 1, color: Colors.grey),
+          Expanded(
+            flex: _tabController.index == 0 ? 3 : 2, // Check if the tab index is initialized
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
                 children: [
-                  // Market Tab content
-                  MarketTab(),
-                  // Order Tab content
-                  OrderTab(),
+                  buildInfoGrid('Bid', '5775', 'Ask', '5777', 'Last', '5777'),
+                  buildInfoGrid('High', '5899', 'Low', '5760', 'Change', '5777'),
+                  buildInfoGrid('Open', '5833', 'Volume', '27291', 'Last Traded Qty', '5777'),
+                  buildInfoGrid('Atp', '5843.84', 'Last', '5786', 'Open Interest', '5777'),
+                  buildInfoGrid('Lot Size', '10', 'Lot Size', '12163', 'Pre. Close', '5777'),
+                  buildInfoGrid('Bid Qty', '214', 'Ask Qty', '1092', '', ''),
+                  buildInfoGrid('Upper Circuit', '6040', 'Lower Circuit', '5576', '', ''),
                 ],
               ),
             ),
-            // Trade details section at the bottom
-            Divider(thickness: 1, color: Colors.grey),
-            Expanded(
-              flex: 2, // Give space for trade details
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    buildInfoGrid('Bid', '5775', 'Ask', '5777', 'Last', '5777'),
-                    buildInfoGrid('High', '5899', 'Low', '5760', 'Change', '5777'),
-                    buildInfoGrid('Open', '5833', 'Volume', '27291', 'Last Traded Qty', '5777'),
-                    buildInfoGrid('Atp', '5843.84', 'Last', '5786', 'Open Interest', '5777'),
-                    buildInfoGrid('Lot Size', '10', 'Lot Size', '12163', 'Pre. Close', '5777'),
-                    buildInfoGrid('Bid Qty', '214', 'Ask Qty', '1092', '', ''),
-                    buildInfoGrid('Upper Circuit', '6040', 'Lower Circuit', '5576', '', ''),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  // Widget for the Market Tab
   Widget MarketTab() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          buildInfoRow('Lots', '1',MarketLotsController,MarketLotsFocusnode),
-          SizedBox(height: 10),
-          Spacer(),
+          buildInfoRow('Lots', '1', MarketLotsController, MarketLotsFocusnode),
+Spacer(),
           Row(
             children: [
               Expanded(
@@ -125,7 +127,7 @@ class _MarketwatchDetailsState extends State<MarketwatchDetails> {
                   Colors.red,
                 ),
               ),
-              SizedBox(width: 10),
+              SizedBox(width: 10,),
               Expanded(
                 child: buildOrderButton(
                   ["Buy @", "5777"],
@@ -134,13 +136,11 @@ class _MarketwatchDetailsState extends State<MarketwatchDetails> {
               ),
             ],
           ),
-
         ],
       ),
     );
   }
 
-  // Widget for the Order Tab
   Widget OrderTab() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -162,7 +162,7 @@ class _MarketwatchDetailsState extends State<MarketwatchDetails> {
             OrderPriceController,
             OrderPriceFocusnode,
           ),
-          Spacer(),
+Spacer(),
           Row(
             children: [
               Expanded(
@@ -185,7 +185,6 @@ class _MarketwatchDetailsState extends State<MarketwatchDetails> {
     );
   }
 
-  // Widget to build a row with label and value
   Widget buildInfoRow(String label, String value, TextEditingController controller, FocusNode focusNode, {TextEditingController? nextController, FocusNode? nextFocusNode}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -204,7 +203,7 @@ class _MarketwatchDetailsState extends State<MarketwatchDetails> {
             ),
             style: TextStyle(color: Colors.white),
             onFieldSubmitted: (value) {
-                FocusScope.of(context).requestFocus(nextFocusNode); // Move focus to the next field
+              FocusScope.of(context).requestFocus(nextFocusNode);
             },
           ),
         ),
@@ -212,8 +211,6 @@ class _MarketwatchDetailsState extends State<MarketwatchDetails> {
     );
   }
 
-
-  // Widget to build the order button
   Widget buildOrderButton(List<String> texts, Color color) {
     return SizedBox(
       width: double.infinity,
@@ -238,20 +235,16 @@ class _MarketwatchDetailsState extends State<MarketwatchDetails> {
     );
   }
 
-  // Widget to build the trade info grid
   Widget buildInfoGrid(String label1, String value1, String label2, String value2, String label3, String value3) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // Left-aligned cell
         Expanded(
           child: buildInfoCell(label1, value1),
         ),
-        // Center-aligned cell
         Expanded(
           child: buildInfoCell(label2, value2),
         ),
-        // Right-aligned cell
         Expanded(
           child: buildInfoCell(label3, value3),
         ),
@@ -259,7 +252,6 @@ class _MarketwatchDetailsState extends State<MarketwatchDetails> {
     );
   }
 
-  // Widget to build a single trade info cell
   Widget buildInfoCell(String label, String value) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,4 +262,3 @@ class _MarketwatchDetailsState extends State<MarketwatchDetails> {
     );
   }
 }
-
