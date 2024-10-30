@@ -5,7 +5,7 @@ import 'package:new_project/Deposit-Withdraw/Deposit-Withdraw.dart';
 import 'package:new_project/Portfolio/Portfolio.dart';
 import 'package:new_project/MarketWatch/MarketwatchDetails.dart';
 import 'package:new_project/Trade/TradesScreen.dart';
-import 'package:new_project/Widget/color.dart';
+import 'package:new_project/Widget/widget.dart';
 import '../MarketWatch/Marketwatch.dart';
 
 class MyHomePage extends StatefulWidget {

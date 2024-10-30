@@ -7,7 +7,7 @@ import 'package:new_project/Account/notifications.dart';
 import 'package:new_project/Account/profile.dart';
 import 'package:new_project/login.dart';
 
-import '../Widget/color.dart';  // Ensure this is properly defined or replace with appropriate colors.
+import '../Widget/widget.dart';  // Ensure this is properly defined or replace with appropriate colors.
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_project/Widget/color.dart'; // Assuming you're using your own color constants.
+import 'package:new_project/Widget/widget.dart'; // Assuming you're using your own color constants.
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});

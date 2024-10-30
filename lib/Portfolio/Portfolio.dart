@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../Widget/color.dart'; // Assuming this contains your custom color definitions
+import '../Widget/widget.dart'; // Assuming this contains your custom color definitions
 
 class PortfolioScreen extends StatefulWidget {
   const PortfolioScreen({super.key});
@@ -23,7 +23,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
           title: Text(
             'Portfolio',
             style: TextStyle(
-                color: WhiteColor, // Assuming WhiteColor is defined in 'color.dart'
+                color: WhiteColor, // Assuming WhiteColor is defined in 'widget.dart'
                 fontWeight: FontWeight.bold),
           ),
           backgroundColor: Colors.black54,

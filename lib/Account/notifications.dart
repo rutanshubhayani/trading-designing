@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_project/Widget/color.dart'; // Assuming you have a color file where 'WhiteColor' is defined
+import 'package:new_project/Widget/widget.dart'; // Assuming you have a color file where 'WhiteColor' is defined
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});

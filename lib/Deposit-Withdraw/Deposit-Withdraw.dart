@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_project/Widget/color.dart';
+import 'package:new_project/Widget/widget.dart';
 
 class DepositWithdrawScreen extends StatefulWidget {
   const DepositWithdrawScreen({super.key});
