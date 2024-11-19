@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const String oneSingalAPPID = "3afcec9d-d025-4c1a-81fe-b46d71cf6959";
 const Color WhiteColor = Color(0xFFFFFFFF);
-const Color BlackColor = Colors.black;
+const Color BlackColor = Colors.white;
 const Color kPrimaryColor = Color(0xFF05A28D);
 const Color kPrimaryAppColor = Color(0xFF006B5C);
 const Color textPlaceholderColor = Color.fromRGBO(66, 66, 66, 1);
