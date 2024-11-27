@@ -8,7 +8,6 @@ const Color kPrimaryAppColor = Color(0xFF006B5C);
 const Color textPlaceholderColor = Color.fromRGBO(66, 66, 66, 1);
 const Color textColor = Color(0xFF1F1F1F);
 const Color iconColor = Color(0xFF2C2C2C);
-
 const Color borderColor = Color(0xFFE8E8E8);
 const Color shadowColor = Color.fromARGB(255, 224, 224, 224);
 
