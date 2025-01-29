@@ -2,7 +2,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_project/Home/home.dart';
-import 'package:new_project/Widget/widget.dart'; // Ensure this imports WhiteColor
+import 'package:new_project/Widget/widget.dart';
+
+import 'calculator.dart'; // Ensure this imports WhiteColor
 
 class Login extends StatefulWidget {
   const Login({super.key});
